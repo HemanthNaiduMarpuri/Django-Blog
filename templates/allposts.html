@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-12 mx-auto">
+    <div class="flex flex-wrap -m-4">
+      {% for post in posts %}
+      <div class="p-4 lg:w-1/3 md:w-1/2">
+        <div class="h-full bg-gray-100 bg-opacity-75 p-6 rounded-lg overflow-hidden text-center relative">
+          <h2 class="tracking-widest text-xs font-medium text-gray-400 mb-1">By {{ post.author }}</h2>
+          <h1 class="title-font text-lg font-medium text-gray-900 mb-3">{{ post.title }}</h1>
+          <p class="leading-relaxed mb-3">{{ post.content|truncatewords:20 }}</p>
+          <div>
+            <a href="{% url 'post-detail' post.id %}" class="text-indigo-500 inline-flex items-center">
+            View Post
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          {% if request.user.is_admin %}
+          <a href="{% url 'post-update' post.id %}" class="text-indigo-500 inline-flex items-center">
+            Edit Post
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
